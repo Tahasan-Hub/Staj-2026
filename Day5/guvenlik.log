@@ -1,0 +1,8 @@
+2026-03-01 22:50:44,727 - Sistem basladi
+2026-03-01 22:50:50,533 - Kisi tespit edildi (ID = 0)
+2026-03-01 22:50:54,190 - IHLAL BASLADI (ID=0,tur = hareketsiz)
+2026-03-01 22:50:55,684 - IHLAL BITTI (ID = 0,tur=hareketsiz)
+2026-03-01 22:50:58,860 - IHLAL BASLADI (ID=0,tur = hareketsiz)
+2026-03-01 22:51:01,391 - IHLAL BASLADÝ (ID=0,tur = goz_kapali)
+2026-03-01 22:51:04,394 - IHLAL BITTI (ID = 0,tur=hareketsiz)
+2026-03-01 22:51:06,441 - IHLAL BITTI (ID = 0,tur=goz_kapali)
