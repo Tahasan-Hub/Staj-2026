@@ -99,7 +99,13 @@ def yolo_kutulari_bul(frame):#Görüntüdeki nesnelerin kutu koordinatlarını b
             guven_skoru = float(kutu.conf[0])#Yapay zekanın bu kutudaki nesneden yüzde kaç emin olduğunu alıyoruz
             if guven_skoru > CONFIG["yolo_confidence"]:#Eğer güven skoru bizim configdeki eşiğimizden büyükse bu kutuyu kabul ediyoruz
                 x1,y1,x2,y2 = map(int,kutu.xyxy[0])#Kutunun 4 köşesinin koordinatlarını tam sayı olarak alıyoruz
-                bulunan_kutular.append([x1,y1,x2,y2])#Koordinatları bir liste yapıp,ana listemize ekliyoruz
+                genislik = x2 - x1
+                yeni_y1 = y1 #Üst (y1) alt (y2) sınırları YOLO'nun bulduğu gibi bırakıyoruz.
+                yeni_y2 = y2 #Böylece kutu kafadan başlar ve bacaklara/ayaklara kadar uzanır.
+
+                yeni_x1 = x1 + int(genislik * 0.32) #Sol kenarı (x1) toplam genişliğin %20'si kadar sağa itiyoruz
+                yeni_x2 = x2 - int(genislik * 0.32) #Sağ kenarı (x2) toplam genişliğin %20'si kadar sola itiyoruz
+                bulunan_kutular.append([yeni_x1,yeni_y1,yeni_x2,yeni_y2])#Koordinatları bir liste yapıp,ana listemize ekliyoruz
     return bulunan_kutular#Bulduğumuz tüm geçerli kutuların listesini dışarıya gönderiyoruz
 
 def kare_isle(frame):#Bir fotoğrafı alır,işler,üzerine çizim yapıp geri döndürür.
@@ -118,7 +124,7 @@ def kare_isle(frame):#Bir fotoğrafı alır,işler,üzerine çizim yapıp geri d
         goz_tehlikede = False
         hareket_tehlikede = False
         cv2.circle(frame,k_merkez,5,(0,0,255),-1)#Kişinin tam merkez noktasına küçük kırmızı bir nokta çiziyoruz
-        cv2.putText(frame,f"ID: {k_id}",(k_merkez[0]-25 , k_merkez[1] - 230),cv2.FONT_HERSHEY_SIMPLEX,0.6,(0,255,0),2)#Kişinin merkez noktasının biraz üstüne yeşil renkle ID numarasını yazıyoruz
+       
 
         if ear_degeri is not None: # Eğer MediaPipe bir yüz veya göz bulabildiyse hesaplamaya başla
             if ear_degeri < CONFIG["ear_threshold"]: #Göz kapalıysa EAR değeri CONFİG de ki eşiğimizden küçük mü?
